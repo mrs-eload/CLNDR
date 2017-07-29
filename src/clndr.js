@@ -577,7 +577,7 @@
     Clndr.prototype.createDayObject = function (day, monthEvents) {
         var j = 0,
             self = this,
-            now = moment(),
+            now = moment().utc(),
             eventsToday = [],
             extraClasses = "",
             properties = {
@@ -589,7 +589,7 @@
 
         // Validate moment date
         if (!day.isValid() && day.hasOwnProperty('_d') && day._d != undefined) {
-            day = moment(day._d);
+            day = moment(day._d).utc();
         }
 
         for (j; j < monthEvents.length; j++) {
@@ -866,8 +866,8 @@
 
             // Today? We could put this in init(), but we want to support the
             // user changing the constraints on a living instance.
-            if ( (start && start.isAfter( moment(), 'month' ))
-                || (end && end.isBefore( moment(), 'month' )) )
+            if ( (start && start.isAfter( moment().utc(), 'month' ))
+                || (end && end.isBefore( moment().utc(), 'month' )) )
             {
                 this.element.find('.' + this.options.targets.today)
                     .toggleClass(this.options.classes.inactive, true);
